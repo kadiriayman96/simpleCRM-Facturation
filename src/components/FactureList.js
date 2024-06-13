@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/FactureList.css";
+import DetailsFacture from "./DetailsFacture";
 
 class FactureList extends Component {
   constructor(props) {
@@ -12,13 +12,11 @@ class FactureList extends Component {
   }
 
   componentDidMount() {
-    // Fetch invoices from localStorage
     const factures = JSON.parse(localStorage.getItem("factures")) || [];
     this.setState({ factures });
   }
 
   viewDetails = (facture) => {
-    console.log("Button clicked", facture); // Debugging step
     this.setState({ selectedFacture: facture, showModal: true });
   };
 
@@ -63,23 +61,10 @@ class FactureList extends Component {
         </table>
 
         {showModal && selectedFacture && (
-          <div className="modal-details-ak">
-            <div className="modal-contents-ak">
-              <span className="close" onClick={this.closeModal}>
-                &times;
-              </span>
-              <h2>Détails de la Facture</h2>
-              <ul>
-                {selectedFacture.articles.map((article, index) => (
-                  <li key={index}>
-                    {article.nom} - Quantité: {article.quantite}, Prix:{" "}
-                    {article.prix}, Remise: {article.remise}, Montant:{" "}
-                    {article.montant}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <DetailsFacture
+            selectedFacture={selectedFacture}
+            closeModal={this.closeModal}
+          />
         )}
       </div>
     );
