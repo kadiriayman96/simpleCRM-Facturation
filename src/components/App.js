@@ -8,6 +8,7 @@ class App extends Component {
       <div className="container mt-5 shadowbox">
         <h1 className="pt-5">SimpleCRM Facturation</h1>
         <CreerFacture />
+        <FactureList />
       </div>
     );
   }

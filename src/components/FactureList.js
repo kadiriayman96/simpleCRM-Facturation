@@ -28,17 +28,16 @@ class FactureList extends Component {
   render() {
     const { factures, selectedFacture, showModal } = this.state;
     return (
-      <div>
-        <h2>Liste des Factures</h2>
-        <table>
+      <div className="container mt-5">
+        <table className="table">
           <thead>
-            <tr>
-              <th>ID Facture</th>
-              <th>Nom du Client</th>
-              <th>Montant HT</th>
-              <th>Montant TVA</th>
-              <th>Montant TTC</th>
-              <th>Actions</th>
+            <tr className="table-primary">
+              <th scope="col">ID Facture</th>
+              <th scope="col">Nom du Client</th>
+              <th scope="col">Montant HT</th>
+              <th scope="col">Montant TVA</th>
+              <th scope="col">Montant TTC</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +49,10 @@ class FactureList extends Component {
                 <td>{facture.montantTVA}</td>
                 <td>{facture.montantTTC}</td>
                 <td>
-                  <button onClick={() => this.viewDetails(facture)}>
+                  <button
+                    onClick={() => this.viewDetails(facture)}
+                    className="btn btn-primary"
+                  >
                     Voir Détails
                   </button>
                 </td>

@@ -7,13 +7,13 @@ class ArticleList extends Component {
         <div className="col-auto d-flex justify-content-end">
           <button
             type="button"
-            className="btn btn btn-info mt-4"
+            className="btn btn-primary mt-4"
             id="ajouterArticle"
           >
             + Ajouter Article
           </button>
         </div>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">Article</th>
@@ -27,7 +27,9 @@ class ArticleList extends Component {
             <tr>
               <td className="w-25">
                 <select className="form-select">
-                  <option selected>Asus TUF Gaming F15</option>
+                  <option value="" selected>
+                    Asus TUF Gaming F15
+                  </option>
                 </select>
               </td>
               <td style={{ width: "200px" }}>
