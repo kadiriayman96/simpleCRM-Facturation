@@ -27,9 +27,7 @@ class ArticleList extends Component {
             <tr>
               <td className="w-25">
                 <select className="form-select">
-                  <option value="" selected>
-                    Asus TUF Gaming F15
-                  </option>
+                  <option defaultValue>Asus TUF Gaming F15</option>
                 </select>
               </td>
               <td style={{ width: "200px" }}>

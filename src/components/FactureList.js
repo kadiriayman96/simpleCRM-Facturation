@@ -18,6 +18,7 @@ class FactureList extends Component {
   }
 
   viewDetails = (facture) => {
+    console.log("Button clicked", facture); // Debugging step
     this.setState({ selectedFacture: facture, showModal: true });
   };
 
@@ -62,8 +63,8 @@ class FactureList extends Component {
         </table>
 
         {showModal && selectedFacture && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="modal-details-ak">
+            <div className="modal-contents-ak">
               <span className="close" onClick={this.closeModal}>
                 &times;
               </span>

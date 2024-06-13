@@ -1,4 +1,4 @@
-.modal {
+.modal-details-ak {
     display: block;
     position: fixed;
     z-index: 1;
@@ -11,7 +11,7 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal-contents-ak {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
