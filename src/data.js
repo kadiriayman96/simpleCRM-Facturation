@@ -2,52 +2,52 @@ const products = [
   {
     id: 1,
     name: "Laptop",
-    price: 1000,
+    price: 8099,
   },
   {
     id: 2,
     name: "Smartphone",
-    price: 500,
+    price: 1399,
   },
   {
     id: 3,
     name: "Tablet",
-    price: 300,
+    price: 799,
   },
   {
     id: 4,
     name: "Headphones",
-    price: 200,
+    price: 245,
   },
   {
     id: 5,
     name: "Smartwatch",
-    price: 350,
+    price: 349,
   },
   {
     id: 6,
     name: "Camera",
-    price: 600,
+    price: 899,
   },
   {
     id: 7,
     name: "Gaming Console",
-    price: 400,
+    price: 2599,
   },
   {
     id: 8,
     name: "Wireless Earbuds",
-    price: 150,
+    price: 1999,
   },
   {
     id: 9,
     name: "External Hard Drive",
-    price: 120,
+    price: 399,
   },
   {
     id: 10,
     name: "VR Headset",
-    price: 800,
+    price: 7549,
   },
 ];
 

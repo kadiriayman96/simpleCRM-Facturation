@@ -6,9 +6,22 @@ class AjouterDetailsFacture extends Component {
     super(props);
     this.state = {
       showModal: false,
+      clients: [],
     };
   }
 
+  componentDidMount() {
+    // Get clients from local storage
+    const clients = JSON.parse(localStorage.getItem("clients")) || [];
+    this.setState({ clients });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showModal !== this.state.showModal) {
+      const clients = JSON.parse(localStorage.getItem("clients")) || [];
+      this.setState({ clients });
+    }
+  }
   openModal = (event) => {
     if (event.target.value === "10") {
       this.setState({ showModal: true });
@@ -20,6 +33,8 @@ class AjouterDetailsFacture extends Component {
   };
 
   render() {
+    const { clients, showModal } = this.state;
+
     return (
       <div className="container mt-5">
         <form className="row g-3">
@@ -39,18 +54,19 @@ class AjouterDetailsFacture extends Component {
               id="facturePour"
               onChange={this.openModal}
             >
-              <option value="1">Reda Abou</option>
-              <option value="2">Yasser</option>
+              {clients.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.name}
+                </option>
+              ))}
               <option value="10">+ Ajouter un client</option>
             </select>
-            {this.state.showModal && (
-              <AjouterClient closeModal={this.closeModal} />
-            )}
+            {showModal && <AjouterClient closeModal={this.closeModal} />}
           </div>
           <div className="col-auto">
             <button
               type="button"
-              className="btn btn btn-success mt-4"
+              className="btn btn-success mt-4"
               id="ajouterFacture"
             >
               Ajouter Facture

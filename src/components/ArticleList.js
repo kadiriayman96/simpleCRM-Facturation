@@ -94,9 +94,8 @@ class ArticleList extends Component {
                   </td>
                   <td style={{ width: "200px" }}>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
-                      min="0"
                       name="quantity"
                       id={article.id}
                       value={article.quantity}
