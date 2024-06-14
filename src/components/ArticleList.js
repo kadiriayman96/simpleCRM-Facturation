@@ -13,7 +13,7 @@ class ArticleList extends Component {
     const newArticle = {
       id: Date.now(),
       name: "",
-      quantity: 0,
+      quantity: "",
       price: "",
       discount: "",
       total: "",
@@ -29,24 +29,47 @@ class ArticleList extends Component {
     }));
   };
 
+  calculateDiscount = (quantity) => {
+    if (quantity < 10) return 5;
+    if (quantity >= 10 && quantity < 20) return 10;
+    if (quantity >= 20 && quantity < 50) return 15;
+    if (quantity >= 50) return 20;
+  };
+
   handleProductChange = (event) => {
     const { name, value } = event.target;
     const id = parseInt(event.target.id);
     const selectedProduct = products.find((product) => product.name === value);
+    const quantity =
+      name === "quantity"
+        ? parseInt(value)
+        : parseInt(
+            this.state.articles.find((article) => article.id === id)?.quantity
+          ) || 0;
 
-    if (selectedProduct) {
-      const updatedArticles = this.state.articles.map((article) =>
-        article.id === id
-          ? {
-              ...article,
-              [name]: value,
-              price: selectedProduct.price,
-            }
-          : article
-      );
+    const updatedArticles = this.state.articles.map((article) => {
+      if (article.id === id) {
+        const newPrice = selectedProduct
+          ? selectedProduct.price
+          : article.price;
+        const newQuantity =
+          name === "quantity" ? parseInt(value) : article.quantity;
+        const discountRate = this.calculateDiscount(newQuantity);
+        const discount = newPrice * newQuantity * (discountRate / 100);
+        const total = newPrice * newQuantity - discount;
 
-      this.setState({ articles: updatedArticles });
-    }
+        return {
+          ...article,
+          [name]: value,
+          price: newPrice,
+          discount: `${discountRate} %`,
+          total: `${total.toFixed(2)} MAD`,
+        };
+      }
+      return article;
+    });
+
+    this.setState({ articles: updatedArticles });
   };
 
   render() {
@@ -102,7 +125,7 @@ class ArticleList extends Component {
                       onChange={this.handleProductChange}
                     />
                   </td>
-                  <td>{article.price}</td>
+                  <td>{article.price} MAD</td>
                   <td>{article.discount}</td>
                   <td>{article.total}</td>
                   <td>
