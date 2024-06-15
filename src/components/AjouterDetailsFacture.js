@@ -32,6 +32,13 @@ class AjouterDetailsFacture extends Component {
     this.setState({ showModal: false });
   };
 
+  ajouterFacture = (event) => {
+    eventPreventDefault();
+
+    
+
+  };
+
   render() {
     const { clients, showModal } = this.state;
 
@@ -54,6 +61,9 @@ class AjouterDetailsFacture extends Component {
               id="facturePour"
               onChange={this.openModal}
             >
+              <option value="0" disabled selected>
+                Selectionner un client
+              </option>
               {clients.map((client) => (
                 <option key={client.id} value={client.id}>
                   {client.name}
