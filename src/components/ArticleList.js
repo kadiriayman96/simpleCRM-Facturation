@@ -19,22 +19,30 @@ class ArticleList extends Component {
       discount: "",
       total: "",
     };
-    this.setState((prevState) => ({
-      articles: [...prevState.articles, newArticle],
-    }));
+    this.setState(
+      (prevState) => ({
+        articles: [...prevState.articles, newArticle],
+      }),
+      () => this.props.updateArticles(this.state.articles)
+    );
   };
 
   removeArticle = (id) => {
-    this.setState((prevState) => ({
-      articles: prevState.articles.filter((article) => article.id !== id),
-    }));
+    this.setState(
+      (prevState) => ({
+        articles: prevState.articles.filter((article) => article.id !== id),
+      }),
+      () => this.props.updateArticles(this.state.articles)
+    );
   };
 
   updateArticle = (id, updatedArticle) => {
     const updatedArticles = this.state.articles.map((article) =>
       article.id === id ? { ...article, ...updatedArticle } : article
     );
-    this.setState({ articles: updatedArticles });
+    this.setState({ articles: updatedArticles }, () =>
+      this.props.updateArticles(this.state.articles)
+    );
   };
 
   render() {

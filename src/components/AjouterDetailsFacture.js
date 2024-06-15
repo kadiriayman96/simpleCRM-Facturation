@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AjouterClient from "./AjouterClient";
+import ArticleList from "./ArticleList";
 
 class AjouterDetailsFacture extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class AjouterDetailsFacture extends Component {
     this.state = {
       showModal: false,
       clients: [],
+      articles: [],
     };
   }
 
@@ -22,6 +24,7 @@ class AjouterDetailsFacture extends Component {
       this.setState({ clients });
     }
   }
+
   openModal = (event) => {
     if (event.target.value === "10") {
       this.setState({ showModal: true });
@@ -33,10 +36,25 @@ class AjouterDetailsFacture extends Component {
   };
 
   ajouterFacture = (event) => {
-    eventPreventDefault();
+    event.preventDefault();
 
-    
+    const { articles } = this.state;
+    const total = articles
+      .reduce((sum, article) => sum + parseFloat(article.total), 0)
+      .toFixed(2);
+    const articleDetails = articles
+      .map(
+        (article) => `
+      Name: ${article.name}, Quantity: ${article.quantity}, Price: ${article.price} MAD, Discount: ${article.discount}, Total: ${article.total}
+    `
+      )
+      .join("\n");
 
+    alert(`Total: ${total} MAD\n\nArticles:\n${articleDetails}`);
+  };
+
+  updateArticles = (articles) => {
+    this.setState({ articles });
   };
 
   render() {
@@ -44,7 +62,7 @@ class AjouterDetailsFacture extends Component {
 
     return (
       <div className="container mt-5">
-        <form className="row g-3">
+        <form className="row g-3" onSubmit={this.ajouterFacture}>
           <div className="col-auto">
             <label htmlFor="idFacture">Id Facture</label>
             <input type="text" className="form-control" id="idFacture" />
@@ -75,7 +93,7 @@ class AjouterDetailsFacture extends Component {
           </div>
           <div className="col-auto">
             <button
-              type="button"
+              type="submit"
               className="btn btn-success mt-4"
               id="ajouterFacture"
             >
@@ -83,6 +101,7 @@ class AjouterDetailsFacture extends Component {
             </button>
           </div>
         </form>
+        <ArticleList updateArticles={this.updateArticles} />
       </div>
     );
   }
