@@ -31,6 +31,7 @@ class AjouterClient extends Component {
     }
     // add to local storage
     const client = {
+      id: Date.now(),
       name: clientName,
       address: clientAddress,
       phone: clientPhone,

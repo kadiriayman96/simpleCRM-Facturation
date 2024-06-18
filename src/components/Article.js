@@ -26,8 +26,8 @@ class Article extends Component {
       ...article,
       [name]: value,
       price: newPrice,
-      discount: `${discountRate} %`,
-      total: `${total.toFixed(2)} MAD`,
+      discount: `${discountRate}`,
+      total: `${total.toFixed(2)}`,
     };
 
     onUpdate(article.id, updatedArticle);
@@ -65,8 +65,8 @@ class Article extends Component {
           />
         </td>
         <td>{article.price} MAD</td>
-        <td>{article.discount}</td>
-        <td>{article.total}</td>
+        <td>{article.discount}%</td>
+        <td>{article.total} MAD</td>
         <td>
           <button
             type="button"

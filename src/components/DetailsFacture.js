@@ -15,9 +15,9 @@ class DetailsFacture extends Component {
               <ul>
                 {selectedFacture.articles.map((article, index) => (
                   <li key={index}>
-                    {article.nom} - Quantité: {article.quantite}, Prix:{" "}
-                    {article.prix}, Remise: {article.remise}, Montant:{" "}
-                    {article.montant}
+                    {article.name} - Quantité: {article.quantity}, Prix:{" "}
+                    {article.price} MAD, Remise: {article.discount}, Total:{" "}
+                    {article.total} MAD
                   </li>
                 ))}
               </ul>

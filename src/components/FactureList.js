@@ -5,15 +5,9 @@ class FactureList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      factures: [],
       selectedFacture: null,
       showModal: false,
     };
-  }
-
-  componentDidMount() {
-    const factures = JSON.parse(localStorage.getItem("factures")) || [];
-    this.setState({ factures });
   }
 
   viewDetails = (facture) => {
@@ -25,7 +19,8 @@ class FactureList extends Component {
   };
 
   render() {
-    const { factures, selectedFacture, showModal } = this.state;
+    const { factures } = this.props;
+    const { selectedFacture, showModal } = this.state;
     return (
       <div className="container mt-5">
         <table className="table">
@@ -42,11 +37,11 @@ class FactureList extends Component {
           <tbody>
             {factures.map((facture) => (
               <tr key={facture.id}>
-                <td>{facture.id}</td>
-                <td>{facture.client}</td>
-                <td>{facture.montantHT}</td>
-                <td>{facture.montantTVA}</td>
-                <td>{facture.montantTTC}</td>
+                <td>{facture.idFacture}</td>
+                <td>{facture.clientName}</td>
+                <td>{facture.totalHT} MAD</td>
+                <td>{facture.totalTVA} MAD</td>
+                <td>{facture.totalTTC} MAD</td>
                 <td>
                   <button
                     onClick={() => this.viewDetails(facture)}

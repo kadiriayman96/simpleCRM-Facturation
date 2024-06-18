@@ -13,16 +13,8 @@ class AjouterDetailsFacture extends Component {
   }
 
   componentDidMount() {
-    // Get clients from local storage
     const clients = JSON.parse(localStorage.getItem("clients")) || [];
     this.setState({ clients });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.showModal !== this.state.showModal) {
-      const clients = JSON.parse(localStorage.getItem("clients")) || [];
-      this.setState({ clients });
-    }
   }
 
   openModal = (event) => {
@@ -38,19 +30,89 @@ class AjouterDetailsFacture extends Component {
   ajouterFacture = (event) => {
     event.preventDefault();
 
+    const idFacture = document.getElementById("idFacture").value;
+    const date = document.getElementById("dateFacture").value;
+    const clientId = document.getElementById("facturePour").value;
+
+    if (
+      idFacture === "" ||
+      date === "" ||
+      clientId === "0" ||
+      clientId === "10" ||
+      this.state.articles.length === 0
+    ) {
+      alert("Veuillez remplir tous les champs");
+      return;
+    }
+
+    const client = this.state.clients.find(
+      (client) => client.id === parseInt(clientId)
+    );
+    if (!client) {
+      alert("Client non valide");
+      return;
+    }
+
+    const clientName = client.name;
     const { articles } = this.state;
-    const total = articles
+
+    for (const article of articles) {
+      if (
+        !article.name ||
+        article.quantity === "" ||
+        article.price === "" ||
+        article.quantity <= 0 ||
+        article.price <= 0
+      ) {
+        alert("Veuillez remplir tous les détails des articles correctement");
+        return;
+      }
+    }
+
+    // Calculate total TTC
+    const totalTTC = articles
       .reduce((sum, article) => sum + parseFloat(article.total), 0)
       .toFixed(2);
-    const articleDetails = articles
-      .map(
-        (article) => `
-      Name: ${article.name}, Quantity: ${article.quantity}, Price: ${article.price} MAD, Discount: ${article.discount}, Total: ${article.total}
-    `
-      )
-      .join("\n");
 
-    alert(`Total: ${total} MAD\n\nArticles:\n${articleDetails}`);
+    // Calculate total discount (which is the total VAT)
+    const totalTVA = articles
+      .reduce((sum, article) => sum + parseFloat(article.discount), 0)
+      .toFixed(2);
+
+    // Calculate total HT
+    const totalHT = (totalTTC - totalTVA).toFixed(2);
+
+    const articleDetails = articles.map((article) => {
+      const { name, quantity, price, discount, total } = article;
+      return {
+        name,
+        quantity,
+        price,
+        discount,
+        total,
+      };
+    });
+
+    let factureDetails = `ID Facture: ${idFacture}\nDate: ${date}\nClient: ${clientName}\n\nArticles:\n`;
+    articles.forEach((article) => {
+      factureDetails += `- Name: ${article.name}, Quantity: ${article.quantity}, Price: ${article.price} MAD, Discount: ${article.discount}, Total: ${article.total} MAD\n`;
+    });
+    factureDetails += `\nTotal HT: ${totalHT} MAD\nTotal TVA: ${totalTVA} MAD\nTotal TTC: ${totalTTC} MAD`;
+
+    alert(factureDetails);
+
+    const facture = {
+      id: Date.now(),
+      idFacture,
+      date,
+      clientName,
+      articles: articleDetails,
+      totalHT,
+      totalTVA,
+      totalTTC,
+    };
+
+    this.props.addFacture(facture);
   };
 
   updateArticles = (articles) => {
