@@ -6,26 +6,9 @@ class AjouterDetailsFacture extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false,
-      clients: [],
       articles: [],
     };
   }
-
-  componentDidMount() {
-    const clients = JSON.parse(localStorage.getItem("clients")) || [];
-    this.setState({ clients });
-  }
-
-  openModal = (event) => {
-    if (event.target.value === "10") {
-      this.setState({ showModal: true });
-    }
-  };
-
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
 
   ajouterFacture = (event) => {
     event.preventDefault();
@@ -45,7 +28,7 @@ class AjouterDetailsFacture extends Component {
       return;
     }
 
-    const client = this.state.clients.find(
+    const client = this.props.clients.find(
       (client) => client.id === parseInt(clientId)
     );
     if (!client) {
@@ -120,7 +103,7 @@ class AjouterDetailsFacture extends Component {
   };
 
   render() {
-    const { clients, showModal } = this.state;
+    const { clients, toggleModal } = this.props;
 
     return (
       <div className="container mt-5">
@@ -139,7 +122,11 @@ class AjouterDetailsFacture extends Component {
               className="form-select"
               aria-label="Default select example"
               id="facturePour"
-              onChange={this.openModal}
+              onChange={(e) => {
+                if (e.target.value === "10") {
+                  toggleModal();
+                }
+              }}
             >
               <option value="0" disabled selected>
                 Selectionner un client
@@ -151,7 +138,6 @@ class AjouterDetailsFacture extends Component {
               ))}
               <option value="10">+ Ajouter un client</option>
             </select>
-            {showModal && <AjouterClient closeModal={this.closeModal} />}
           </div>
           <div className="col-auto">
             <button

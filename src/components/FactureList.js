@@ -40,7 +40,7 @@ class FactureList extends Component {
                 <td>{facture.idFacture}</td>
                 <td>{facture.clientName}</td>
                 <td>{facture.totalHT} MAD</td>
-                <td>{facture.totalTVA} MAD</td>
+                <td>{facture.totalTVA} %</td>
                 <td>{facture.totalTTC} MAD</td>
                 <td>
                   <button

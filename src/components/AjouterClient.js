@@ -11,7 +11,11 @@ class AjouterClient extends Component {
     submitButton.addEventListener("click", this.ajouterClient);
   }
 
-  // Ajouter un client to local storage
+  componentWillUnmount() {
+    const submitButton = document.getElementById("ajouterClient");
+    submitButton.removeEventListener("click", this.ajouterClient);
+  }
+
   ajouterClient = (event) => {
     event.preventDefault();
 
@@ -29,7 +33,7 @@ class AjouterClient extends Component {
       alert("Veuillez remplir tous les champs");
       return;
     }
-    // add to local storage
+
     const client = {
       id: Date.now(),
       name: clientName,
@@ -37,10 +41,8 @@ class AjouterClient extends Component {
       phone: clientPhone,
       email: clientEmail,
     };
-    const clients = JSON.parse(localStorage.getItem("clients")) || [];
-    clients.push(client);
-    localStorage.setItem("clients", JSON.stringify(clients));
 
+    this.props.addClient(client);
     this.props.closeModal();
   };
 
@@ -102,17 +104,15 @@ class AjouterClient extends Component {
                 />
               </div>
               <div className="mb-3">
-                <div className="mb-3">
-                  <label htmlFor="clientEmail" className="form-label">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="clientEmail"
-                    placeholder="client.email@gmail.com"
-                  />
-                </div>
+                <label htmlFor="clientEmail" className="form-label">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="clientEmail"
+                  placeholder="client.email@gmail.com"
+                />
               </div>
             </div>
             <div className="modal-footer">

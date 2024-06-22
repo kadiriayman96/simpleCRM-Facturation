@@ -49,6 +49,11 @@ const products = [
     name: "VR Headset",
     price: 7549,
   },
+  {
+    id: 11,
+    name: "Pochette Samsung S24",
+    price: 20,
+  },
 ];
 
 export default products;
